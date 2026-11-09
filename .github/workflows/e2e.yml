@@ -1,0 +1,19 @@
+name: TestPilot 5250 e2e
+on: [push, pull_request]
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install
+      - run: npm test
+      - name: Run sample suite against the bundled simulator
+        run: |
+          npm run simulator &
+          sleep 2
+          TP_PASSWORD=TESTER1 node --no-warnings packages/core/src/cli.js run samples/tests --env samples/env.simulator.json --report out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: testpilot-report, path: out/ }

@@ -5,6 +5,16 @@ You can record tests or write them as YAML or JavaScript. They play back headles
 run produces pass/fail results and reports, plus line-level **code coverage** of the RPGLE/CLLE source. A
 React dashboard tracks the whole testing cycle.
 
+## Screenshots
+
+| Dashboard | Run detail |
+|:---------:|:----------:|
+| ![Dashboard](image/shot-dashboard.png) | ![Run detail](image/shot-rundetail.png) |
+
+| Recorder | Coverage |
+|:--------:|:--------:|
+| ![Recorder](image/shot-recorder2.png) | ![Coverage](image/shot-coverage2.png) |
+
 ```
 ┌────────────── Browser (React dashboard) ──────────────┐
 │ Dashboard · Tests · Recorder (live 5250) · Runs ·      │
