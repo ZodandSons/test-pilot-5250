@@ -1,0 +1,12 @@
+{
+  "name": "@tp5250/server",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.js",
+  "dependencies": {
+    "@tp5250/core": "0.1.0",
+    "@tp5250/simulator": "0.1.0",
+    "@tp5250/tn5250": "0.1.0",
+    "ws": "^8.18.0"
+  }
+}

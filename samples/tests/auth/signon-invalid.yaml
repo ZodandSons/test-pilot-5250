@@ -1,0 +1,10 @@
+name: Sign on is rejected with a wrong password
+suite: auth
+tags: [auth, negative]
+coverage: false
+steps:
+  - fill: { label: User, value: "${env.user}" }
+  - fill: { label: Password, value: "NOTMYPWD" }
+  - press: Enter
+  - assertText: { text: "CPF1107", row: 24 }
+  - assertText: { text: "Sign On", row: 1 }

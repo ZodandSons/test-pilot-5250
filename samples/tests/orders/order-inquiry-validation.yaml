@@ -1,0 +1,16 @@
+name: Order inquiry validates the customer number
+suite: orders
+tags: [orders, negative, data-driven]
+description: Data-driven negative tests. One iteration per CSV row.
+data:
+  file: ../../data/customer-validation.csv
+coverage:
+  programs: [ORDINQ]
+steps:
+  - signon: {}
+  - command: "CALL ORDINQ"
+  - fill: { label: Customer number, value: "${data.CUSTNO}" }
+  - press: Enter
+  - assertText: { text: "${data.MESSAGE}", row: 23 }
+  - assertText: { text: "Order Inquiry", row: 1 }
+  - press: F3

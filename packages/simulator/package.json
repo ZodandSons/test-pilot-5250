@@ -1,0 +1,9 @@
+{
+  "name": "@tp5250/simulator",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/server.js",
+  "exports": { ".": "./src/server.js" },
+  "bin": { "tp5250-sim": "src/cli.js" },
+  "dependencies": { "@tp5250/tn5250": "0.1.0" }
+}

@@ -1,0 +1,69 @@
+     A*---------------------------------------------------------------
+     A* ORDINQD - Order Inquiry display file
+     A*---------------------------------------------------------------
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      INDARA
+     A                                      CA03(03 'Exit')
+     A                                      CA12(12 'Cancel')
+     A*---------------------------------------------------------------
+     A          R PROMPT
+     A                                  1  2'ORDINQ'
+     A                                  1 30'Order Inquiry'
+     A                                      DSPATR(HI)
+     A                                  1 72DATE EDTCDE(Y)
+     A                                  3  2'Type customer number, press Enter.'
+     A                                      COLOR(BLU)
+     A                                  5  4'Customer number . . . . .'
+     A            CUSTNO         5Y 0B  5 31
+     A  50                                  DSPATR(RI PC)
+     A                                 22  2'F3=Exit   F12=Cancel'
+     A                                      COLOR(BLU)
+     A            MSG           60A  O 23  2COLOR(RED)
+     A*---------------------------------------------------------------
+     A          R ORDSFL                    SFL
+     A            SOPT           1A  B  8  3
+     A            SORDNO         7Y 0O  8  7
+     A            SDATE         10A  O  8 17
+     A            SAMT          11Y 2O  8 30EDTCDE(J)
+     A            SSTAT         10A  O  8 46
+     A*---------------------------------------------------------------
+     A          R ORDCTL                    SFLCTL(ORDSFL)
+     A                                      SFLSIZ(0013) SFLPAG(0012)
+     A  31                                  SFLDSP
+     A  32                                  SFLDSPCTL
+     A  33                                  SFLCLR
+     A  34                                  SFLEND(*MORE)
+     A                                  1  2'ORDINQ'
+     A                                  1 30'Orders for Customer'
+     A                                      DSPATR(HI)
+     A            CUSTNO         5Y 0O  1 50
+     A                                  3  2'Type options, press Enter.'
+     A                                      COLOR(BLU)
+     A                                  4  4'4=Cancel order   5=Display'
+     A                                      COLOR(BLU)
+     A                                  6  2'Opt  Order     Date              -
+     A                                            Amount  Status'
+     A                                      DSPATR(HI)
+     A*---------------------------------------------------------------
+     A          R FKEYS
+     A                                 22  2'F3=Exit   F12=Cancel'
+     A                                      COLOR(BLU)
+     A            MSG           60A  O 23  2COLOR(RED)
+     A*---------------------------------------------------------------
+     A          R DETAIL
+     A                                  1  2'ORDINQ'
+     A                                  1 30'Order Detail'
+     A                                      DSPATR(HI)
+     A                                  4  4'Order number  . . . . . :'
+     A            DORDNO         7Y 0O  4 31
+     A                                  5  4'Customer  . . . . . . . :'
+     A            DCUST          5Y 0O  5 31
+     A            DNAME         30A  O  5 38
+     A                                  6  4'Order date  . . . . . . :'
+     A            DDATE         10A  O  6 31
+     A                                  7  4'Amount  . . . . . . . . :'
+     A            DAMT          11Y 2O  7 31EDTCDE(J)
+     A                                  8  4'Status  . . . . . . . . :'
+     A            DSTAT         10A  O  8 31
+     A                                 22  2'F3=Exit   F12=Cancel'
+     A                                      COLOR(BLU)

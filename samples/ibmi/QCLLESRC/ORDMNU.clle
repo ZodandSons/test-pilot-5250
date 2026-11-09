@@ -1,0 +1,34 @@
+/* ------------------------------------------------------------ */
+/* ORDMNU - Order Management main menu                           */
+/* ------------------------------------------------------------ */
+PGM
+             DCLF       FILE(ORDMNUD)
+             DCL        VAR(&DONE) TYPE(*LGL) VALUE('0')
+
+             ADDLIBLE   LIB(ORDLIB)
+             MONMSG     MSGID(CPF2103)
+
+ LOOP:       IF         COND(&DONE) THEN(GOTO CMDLBL(END))
+             SNDRCVF    RCDFMT(MENU)
+             CHGVAR     VAR(&MSG) VALUE(' ')
+
+             IF         COND(&IN03 *OR &IN12) THEN(DO)
+                CHGVAR     VAR(&DONE) VALUE('1')
+                GOTO       CMDLBL(LOOP)
+             ENDDO
+
+             SELECT
+             WHEN       COND(&OPT *EQ '1') THEN(CALL PGM(ORDINQ))
+             WHEN       COND(&OPT *EQ '2') THEN(CALL PGM(CUSTINQ))
+             WHEN       COND(&OPT *EQ '90') THEN(SIGNOFF)
+             WHEN       COND(&OPT *NE ' ') THEN(DO)
+                QCMDEXC    CMD(&OPT) CMDLEN(153)
+                MONMSG     MSGID(CPF0000) EXEC(CHGVAR VAR(&MSG) +
+                             VALUE('Selection or command is not valid.'))
+             ENDDO
+             ENDSELECT
+
+             CHGVAR     VAR(&OPT) VALUE(' ')
+             GOTO       CMDLBL(LOOP)
+
+ END:        ENDPGM

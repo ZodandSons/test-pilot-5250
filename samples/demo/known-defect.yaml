@@ -1,0 +1,12 @@
+name: Globex available credit is shown as negative (known defect demo)
+suite: customers
+tags: [demo, regression]
+description: Intentionally failing test used to demonstrate failure reporting.
+coverage:
+  programs: [CUSTINQ]
+steps:
+  - signon: {}
+  - command: "2"
+  - fill: { label: Customer number, value: "10002" }
+  - press: Enter
+  - assertText: { text: "-1,500.00", row: 9, col: 31 }

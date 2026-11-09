@@ -1,0 +1,13 @@
+{
+  "name": "@tp5250/core",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": { ".": "./src/index.js" },
+  "bin": { "tp5250": "src/cli.js" },
+  "dependencies": {
+    "@tp5250/tn5250": "0.1.0",
+    "yaml": "^2.5.0"
+  },
+  "optionalDependencies": { "ssh2": "^1.16.0" }
+}

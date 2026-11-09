@@ -1,0 +1,25 @@
+name: Cancel an open order; shipped orders cannot be cancelled
+suite: orders
+tags: [orders, regression]
+coverage:
+  programs: [ORDINQ]
+steps:
+  - signon: {}
+  - command: "1"
+  - fill: { label: Customer number, value: "10002" }
+  - press: Enter
+  - assertText: { text: "5000202", row: 9, col: 7 }
+  - assertText: { text: "OPEN", row: 9, col: 46 }
+  - fill: { row: 9, col: 3, value: "4" }
+  - press: Enter
+  - assertText: { text: "Order 5000202 cancelled.", row: 23 }
+  - assertText: { text: "CANCELLED", row: 9, col: 46 }
+  - fill: { row: 8, col: 3, value: "4" }
+  - press: Enter
+  - assertText: { text: "Only OPEN orders can be cancelled.", row: 23 }
+  - fill: { row: 10, col: 3, value: "X" }
+  - press: Enter
+  - assertText: { text: "Option X is not valid.", row: 23 }
+  - press: F12
+  - assertText: { text: "Order Inquiry", row: 1 }
+  - press: F3

@@ -1,0 +1,30 @@
+name: Order inquiry lists, pages and displays orders
+suite: orders
+tags: [smoke, orders]
+coverage:
+  programs: [ORDINQ, ORDMNU]
+steps:
+  - signon: {}
+  - command: "1"
+  - assertText: { text: "Order Inquiry", row: 1 }
+  - fill: { label: Customer number, value: "10001" }
+  - press: Enter
+  - assertText: { text: "Orders for Customer", row: 1 }
+  - assertText: { text: "ACME Manufacturing", row: 1 }
+  - assertText: { text: "5000101", row: 8, col: 7 }
+  - assertText: { text: "More...", row: 20 }
+  - press: PageDown
+  - assertText: { text: "5000113", row: 8, col: 7 }
+  - assertText: { text: "Bottom", row: 20 }
+  - press: PageUp
+  - name: Capture first order number
+    setVar: { name: ORDER, row: 9, col: 7, length: 7 }
+  - fill: { row: 9, col: 3, value: "5" }
+  - press: Enter
+  - assertText: { text: "Order Detail", row: 1 }
+  - assertText: { text: "${vars.ORDER}", row: 4 }
+  - assertText: { text: "SHIPPED", row: 8 }
+  - press: F12
+  - assertText: { text: "Orders for Customer", row: 1 }
+  - press: F3
+  - assertText: { text: "Order Management System", row: 1 }

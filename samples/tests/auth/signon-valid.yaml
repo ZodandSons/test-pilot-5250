@@ -1,0 +1,13 @@
+name: Sign on with valid credentials reaches main menu
+suite: auth
+tags: [smoke, auth]
+coverage:
+  programs: [ORDMNU]
+description: Verifies that a valid user lands on the Order Management menu.
+steps:
+  - assertText: { text: "Sign On", row: 1 }
+  - signon: { user: "${env.user}", password: "${env.password}" }
+  - assertText: { text: "Order Management System", row: 1 }
+  - assertText: "1. Order inquiry"
+  - press: F3
+  - assertText: { text: "Sign On", row: 1 }

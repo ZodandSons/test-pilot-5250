@@ -1,0 +1,26 @@
+import { startSimulator } from '@tp5250/simulator';
+import { Session } from '@tp5250/tn5250';
+const sim = await startSimulator({ port: 0, httpPort: 0, quiet: true });
+const s = new Session({ host: '127.0.0.1', port: sim.port, deviceName: 'TPTEST01' });
+await s.connect();
+const show = (t) => console.log(`---- ${t}\n` + s.screen.textRows().map((l,i)=>String(i+1).padStart(2)+'|'+l).filter(l=>l.slice(3).trim()).join('\n'));
+show('signon');
+console.log(JSON.stringify(s.screen.toJSON().fields.map(f=>[f.label,f.row,f.col,f.length,f.hidden])));
+s.fill({label:'User'}, 'tester'); s.fill({label:'Password'}, 'WRONG');
+await s.press('Enter'); show('bad pwd'); console.log('errorLine:', s.screen.errorLine);
+await fetch(`http://127.0.0.1:${sim.httpPort}/coverage/start`, {method:'POST', body: JSON.stringify({device:'TPTEST01'})});
+s.fill({label:'User'}, 'tester'); s.fill({label:'Password'}, 'TESTER1');
+await s.press('Enter'); show('menu');
+s.fill({row:20,col:7}, '1'); await s.press('Enter'); show('prompt');
+await s.press('Enter'); show('blank cust');
+s.fill({label:'Customer number'}, '10001'); await s.press('Enter'); show('list');
+await s.press('PageDown'); show('page2');
+await s.press('PageUp');
+s.fill({row:9,col:3}, '5'); await s.press('Enter'); show('detail');
+await s.press('Enter'); show('back');
+s.fill({row:8,col:3}, '4'); await s.press('Enter'); show('cancelled');
+await s.press('F3'); show('menu again');
+const cov = await (await fetch(`http://127.0.0.1:${sim.httpPort}/coverage/stop`, {method:'POST', body: JSON.stringify({device:'TPTEST01'})})).json();
+for (const p of cov.programs) { const hit=Object.keys(p.hits).length; console.log(p.program, `${hit}/${p.executable.length}`, (100*hit/p.executable.length).toFixed(1)+'%'); }
+const o = cov.programs.find(p=>p.program==='ORDINQ'); console.log('missed:', o.executable.filter(l=>!o.hits[l]).map(l=>l+':'+o.source[l-1].trim()).join('\n  '));
+s.close(); await sim.close(); process.exit(0);

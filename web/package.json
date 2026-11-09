@@ -1,0 +1,21 @@
+{
+  "name": "testpilot5250-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TestPilot 5250 dashboard (React). Built with esbuild; output in dist/ is served by the TestPilot server.",
+  "scripts": {
+    "dev": "node build.mjs --dev",
+    "build": "node build.mjs",
+    "preview": "node build.mjs --preview"
+  },
+  "dependencies": {
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}
